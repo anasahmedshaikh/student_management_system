@@ -1,0 +1,26 @@
+from qrcode import qrcode
+from barcode import CODE39
+import json
+
+# input data
+print("----------Enter Student's Details----------") 
+name = input("Enter Student's name: ")
+age = int(input("Enter Student's age: "))
+_class = input("Enter Student's class: ")
+
+data = {
+    "name": name,
+    "age": age,
+    "class": _class
+} 
+json_data = json.dumps(data)
+br_qr = input("Do you want to generate qr code? (y/n): ")
+if br_qr.lower() == 'y':
+    qr_img = qrcode.make(json_data)  
+    # saving the image file  
+    qr_img.save(f"{name}-qr.jpg") 
+    print("QR code generated successfully!")
+else:
+    bar_code = CODE39(json_data)
+    bar_code.save(f"{name}-bar")
+    print("Barcode generated successfully!")
